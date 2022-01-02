@@ -18,10 +18,11 @@ plt.ion()   # interactive mode
 
 
 class MangaDataset(Dataset):
-    def __init__(self, img_paths, target_paths, transform=None):
+    def __init__(self, img_paths, target_paths, transform=None, transform_mask=None):
         self.img_paths = img_paths
         self.target_paths = target_paths
         self.transform = transform
+        self.transform_mask = transform_mask
 
     def __len__(self):
         return len(self.img_paths)
@@ -31,10 +32,11 @@ class MangaDataset(Dataset):
         target_path = self.target_paths[idx]
         image = cv2.imread(img_path, cv2.IMREAD_COLOR)
         target = cv2.imread(target_path, cv2.IMREAD_COLOR)
-        target = cv2.resize(target, dsize = (1654,1170))
+        target = cv2.cvtColor(target, cv2.COLOR_BGR2GRAY)
+        _, target = cv2.threshold(target, 100, 255, cv2.THRESH_OTSU)
         if self.transform:
             image = self.transform(image)
-            target = self.transform(target)
+            target = self.transform_mask(target)
         return image, target
 
     def viz_random(self):
