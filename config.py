@@ -1,0 +1,13 @@
+images = ""
+masks = ""
+bboxes = ""
+models = ""
+BASE_MODEL_PTH = ""
+BATCH_SIZE = 4
+INIT_LR = 10e-3
+EPOCHS = 10
+ENCODER_PRETRAINED = True
+DECODER_PRETRAINED = True
+IMG_HEIGHT = 512
+IMG_WIDTH = 512
+RANDOM_ROT = False
