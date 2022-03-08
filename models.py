@@ -4,6 +4,7 @@ import torch
 from utils import reshape_bbox
 from torch import nn
 
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class PretrainedUNet34(nn.Module):
     def __init__(self):
@@ -71,6 +72,7 @@ class AncillaryModel(nn.Module):
     def __init__(self):
         super(AncillaryModel, self).__init__()
         self.bbox_encoder = BboxEncoder()
+        self.bbox_encoder = self.bbox_encoder.to(DEVICE)
 
         encoder = "resnet34"
         encoder_wts = "imagenet"
