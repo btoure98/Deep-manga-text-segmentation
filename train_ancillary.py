@@ -50,6 +50,7 @@ val_loader = DataLoader(val_ds, shuffle=True,
 
 # initialize our UNet model
 net = AncillaryModel()
+net.to(DEVICE)
 #net.encoder.requires_grad = False
 
 # initialize loss function and optimizer
@@ -92,7 +93,7 @@ for epoch in range(config.EPOCHS):
     # Save model if a better val IoU score is obtained
     if valid_score <= min(valid_logs_list):
         best_score = valid_score
-        torch.save(net, config.BASE_MODEL_PTH + "ancillary_model.pth")
+        torch.save(net, os.path.join(config.models, config.model_name))
         print('Model saved!')
     print('Epoch: {} - Loss: {:.6f} - Validation: {:.6f}'.format(epoch + 1,
                                                                  train_loss /

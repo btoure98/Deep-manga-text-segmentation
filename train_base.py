@@ -48,7 +48,7 @@ val_loader = DataLoader(val_ds, shuffle=True,
 
 # initialize our UNet model
 net = PretrainedUNet34()
-#net.encoder.requires_grad = False
+net.to(DEVICE)
 
 # initialize loss function and optimizer
 criterion = smp.utils.losses.DiceLoss()
@@ -74,6 +74,7 @@ for epoch in range(config.EPOCHS):
         loss = criterion(output, target)
         loss.backward()
         opt.step()
+        print(loss.item())
         train_loss += loss.item()
 
     valid_loss = 0.0
@@ -93,7 +94,7 @@ for epoch in range(config.EPOCHS):
     # Save model if a better val IoU score is obtained
     if valid_score <= min(valid_logs_list):
         best_score = valid_score
-        torch.save(net, config.BASE_MODEL_PTH + "base_model.pth")
+        torch.save(net, os.path.join(config.models, config.model_name))
         print('Model saved!')
     print('Epoch: {} - Loss: {:.6f} - Validation: {:.6f}'.format(epoch + 1,
                                                                  train_loss /
