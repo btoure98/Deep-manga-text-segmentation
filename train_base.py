@@ -74,7 +74,6 @@ for epoch in range(config.EPOCHS):
         loss = criterion(output, target)
         loss.backward()
         opt.step()
-        print(loss.item())
         train_loss += loss.item()
 
     valid_loss = 0.0
