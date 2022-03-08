@@ -81,6 +81,7 @@ for epoch in range(config.EPOCHS):
     valid_loss = 0.0
     net.eval()
     for (data, target, bbox) in val_loader:
+        data, target, bbox = data.to(DEVICE), target.to(DEVICE), bbox.to(DEVICE)
         # Forward Pass
         target = net(data, bbox)
         # Find the Loss
