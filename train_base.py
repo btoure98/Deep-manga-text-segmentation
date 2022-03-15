@@ -53,7 +53,7 @@ net.to(DEVICE)
 # initialize loss function and optimizer
 criterion = smp.utils.losses.DiceLoss()
 # optimizer
-opt = Adam(net.parameters(), lr=config.INIT_LR)
+opt = Adam(net.parameters(), lr=config.INIT_LR, weight_decay=config.WEIGHT_DECAY)
 
 metrics = [
     smp.utils.metrics.IoU(threshold=0.5),
