@@ -58,12 +58,6 @@ criterion = smp.utils.losses.DiceLoss()
 #optimizer
 opt = Adam(net.parameters(), lr = config.INIT_LR)
 
-metrics = [
-    smp.utils.metrics.IoU(threshold=0.5),
-    smp.utils.metrics.Precision(),
-    smp.utils.metrics.Recall(),
-    smp.utils.metrics.Fscore()
-]
 
 train_logs_list, valid_logs_list = [], []
 for epoch in range(config.EPOCHS):
@@ -83,9 +77,9 @@ for epoch in range(config.EPOCHS):
     for (data, target, bbox) in val_loader:
         data, target, bbox = data.to(DEVICE), target.to(DEVICE), bbox.to(DEVICE)
         # Forward Pass
-        target = net(data, bbox)
+        prediction = net(data, bbox)
         # Find the Loss
-        loss = criterion(target, target)
+        loss = criterion(target, prediction)
         # Calculate Loss
         valid_loss += loss.item()
     valid_score = valid_loss/len(val_loader)

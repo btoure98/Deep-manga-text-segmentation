@@ -82,9 +82,9 @@ for epoch in range(config.EPOCHS):
         data, target = data.to(DEVICE), target.to(DEVICE)
 
         # Forward Pass
-        target = net(data)
+        prediction = net(data)
         # Find the Loss
-        loss = criterion(target, target)
+        loss = criterion(target, prediction)
         # Calculate Loss
         valid_loss += loss.item()
     valid_score = valid_loss/len(val_loader)
