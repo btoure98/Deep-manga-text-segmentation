@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from models import AncillaryModel
 from torch.optim import Adam
 import torchvision.transforms as T
-from utils import split_train_val
+from utils import split_train_val, plot_loss
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -19,14 +19,14 @@ bbox_path = config.bboxes
 
 # lists of path
 images = sorted([os.path.join(images_path, img)
-          for img in sorted(os.listdir(images_path))])
+                 for img in sorted(os.listdir(images_path))])
 masks = sorted([os.path.join(masks_path, mask)
-         for mask in sorted(os.listdir(masks_path))])
+                for mask in sorted(os.listdir(masks_path))])
 bboxes = sorted([os.path.join(bbox_path, bbox)
-          for bbox in sorted(os.listdir(bbox_path))])
+                 for bbox in sorted(os.listdir(bbox_path))])
 
 
-train_img, val_img, train_masks, val_masks,train_boxes, val_boxes = split_train_val((images,
+train_img, val_img, train_masks, val_masks, train_boxes, val_boxes = split_train_val((images,
                                                                                      masks, bboxes))
 transform = T.Compose([
     T.ToPILImage(),
@@ -38,8 +38,9 @@ transform_mask = T.Compose([
     T.Resize((config.IMG_HEIGHT, config.IMG_WIDTH)),
     T.ToTensor()])
 
-train_ds = MangaDataset(train_img, train_masks, train_boxes, transform, transform_mask)
-val_ds = MangaDataset(val_img, val_masks, val_boxes,transform, transform_mask)
+train_ds = MangaDataset(train_img, train_masks,
+                        train_boxes, transform, transform_mask)
+val_ds = MangaDataset(val_img, val_masks, val_boxes, transform, transform_mask)
 
 train_loader = DataLoader(train_ds, shuffle=True,
                           batch_size=config.BATCH_SIZE,
@@ -55,8 +56,8 @@ net.to(DEVICE)
 
 # initialize loss function and optimizer
 criterion = smp.utils.losses.DiceLoss()
-#optimizer
-opt = Adam(net.parameters(), lr = config.INIT_LR)
+# optimizer
+opt = Adam(net.parameters(), lr=config.INIT_LR)
 
 
 train_logs_list, valid_logs_list = [], []
@@ -64,7 +65,8 @@ for epoch in range(config.EPOCHS):
     net.train()
     train_loss = 0.0
     for (data, target, bbox) in train_loader:
-        data, target, bbox = data.to(DEVICE), target.to(DEVICE), bbox.to(DEVICE)
+        data, target, bbox = data.to(
+            DEVICE), target.to(DEVICE), bbox.to(DEVICE)
         opt.zero_grad()
         output = net(data, bbox)
         loss = criterion(output, target)
@@ -75,7 +77,8 @@ for epoch in range(config.EPOCHS):
     valid_loss = 0.0
     net.eval()
     for (data, target, bbox) in val_loader:
-        data, target, bbox = data.to(DEVICE), target.to(DEVICE), bbox.to(DEVICE)
+        data, target, bbox = data.to(
+            DEVICE), target.to(DEVICE), bbox.to(DEVICE)
         # Forward Pass
         prediction = net(data, bbox)
         # Find the Loss
@@ -94,3 +97,4 @@ for epoch in range(config.EPOCHS):
                                                                  train_loss /
                                                                  len(train_loader),
                                                                  valid_loss/len(val_loader)))
+plot_loss(train_logs_list, valid_logs_list)

@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from models import PretrainedUNet34
 from torch.optim import Adam
 import torchvision.transforms as T
-from utils import split_train_val
+from utils import split_train_val, plot_loss
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -99,3 +99,4 @@ for epoch in range(config.EPOCHS):
                                                                  train_loss /
                                                                  len(train_loader),
                                                                  valid_loss/len(val_loader)))
+plot_loss(train_logs_list, valid_logs_list)

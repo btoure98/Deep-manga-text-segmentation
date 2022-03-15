@@ -23,7 +23,7 @@ def test_base(test_path, model_path):
     print("================== Loading model ==================")
     model = torch.load(model_path, map_location=DEVICE)
     model.to(DEVICE)
-    print("Ancillary model loaded successfully")
+    print("Unet34 model loaded successfully")
     print("================== Instantiating data loader ==================")
     images_path = os.path.join(test_path, "images")
     images = [os.path.join(images_path, img)
@@ -64,11 +64,11 @@ def test_base(test_path, model_path):
     print("done!")
     print("================== Getting metrics ==================")
     len_loader = len(loader)
-    print("Accuracy : ", scores[0]/len_loader)
-    print("IoU : ", scores[1]/len_loader)
-    print("Precision : ", scores[2]/len_loader)
-    print("Recall : ", scores[3]/len_loader)
-    print("Fscore : ", scores[4]/len_loader)
+    print("Accuracy : ", "%.2f" % (100*scores[0]/len_loader), "%")
+    print("IoU : ", "%.2f" % (100*scores[1]/len_loader), "%")
+    print("Precision : ", "%.2f" % (100*scores[2]/len_loader), "%")
+    print("Recall : ", "%.2f" % (100*scores[3]/len_loader), "%")
+    print("Fscore : ", "%.2f" % (100*scores[4]/len_loader), "%")
 
 
 def test_ancillary(test_path, model_path):
@@ -122,11 +122,11 @@ def test_ancillary(test_path, model_path):
     print("done!")
     print("================== Getting metrics ==================")
     len_loader = len(loader)
-    print("Accuracy : ", scores[0]/len_loader)
-    print("IoU : ", scores[1]/len_loader)
-    print("Precision : ", scores[2]/len_loader)
-    print("Recall : ", scores[3]/len_loader)
-    print("Fscore : ", scores[4]/len_loader)
+    print("Accuracy : ", "%.2f" % (100*scores[0]/len_loader), "%")
+    print("IoU : ", "%.2f" % (100*scores[1]/len_loader), "%")
+    print("Precision : ", "%.2f" % (100*scores[2]/len_loader), "%")
+    print("Recall : ", "%.2f" % (100*scores[3]/len_loader), "%")
+    print("Fscore : ", "%.2f" % (100*scores[4]/len_loader), "%")
 
 
 if __name__ == "__main__":

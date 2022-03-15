@@ -1,5 +1,7 @@
+import matplotlib
 import numpy as np
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
 
 def reshape_bbox(tensor, target_size):
@@ -23,3 +25,11 @@ def split_train_val(tupl):
         val_boxes = list(val[:, 2])
         return train_img, val_img, train_masks, val_masks, train_boxes, val_boxes
     return train_img, val_img, train_masks, val_masks
+
+def plot_loss(train_logs, valid_logs):
+    plt.plot(train_logs, label='train_loss', marker='*')
+    plt.plot(valid_logs, label='val_loss',  marker='*')
+    plt.title('Loss per epoch'); plt.ylabel('Loss')
+    plt.xlabel('epochs')
+    plt.legend(), plt.grid()
+    plt.show()
