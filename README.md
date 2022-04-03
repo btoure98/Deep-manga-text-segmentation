@@ -35,6 +35,10 @@ It contains implementation of a of Unet + Resnet34 to perform this task. It also
 
 ---
 
+## Dataset
+Thanks the Manga109 dataset providers, check it out here [Manga 109 website](http://www.manga109.org/en/).
+Thanks also to this annotated version for segmentation [zenodo](https://zenodo.org/record/4511796) for Manga109 datset from https://github.com/juvian. 
+
 ## :wrench: How to run the code
 
 1. Install `requirements.txt` in your `Python` environment
