@@ -3,30 +3,30 @@
 
 
 This project is about japanese text segmentation in manga. 
-It contains implementation of a of Unet + Resnet34 to perform this task. It also has a semi-supervised approach to enhance state of the art results.
+It contains implementation of a Unet + Resnet34 with semi-supervised approach to enhance state of the art performance.
 
 ## :file_folder: Project layout
 
 ```text
 .
-├── models                  # Contains weights of the trained neural nets
-│   ├── ancillary_model.pth # The ancillary model weights
-│   ├── simple_Unet34.pth   # The base unet + resnet34 auto-encorder
+├── models                  # Contains weights of the trained nets
+│   ├── ancillary_model.pth 
+│   ├── simple_Unet34.pth   
 ├── tools                   # Contains a set of helper scripts
-│   ├── get_bbox.py         # Draws bounding boxes on image from xml for manga109 dataset
-│   ├── img_cropper.py      # Crops and save image for dataset selection
-│   ├── viz_dataset.py      # Side by side image viz to validate segmentation
-├── data                    # Contains the financial data for the environment
+│   ├── get_bbox.py        
+│   ├── img_cropper.py      
+│   ├── viz_dataset.py      
+├── data                    
 ├── notebooks               # Training and prediction notebooks
-├── exemples                # Contains a manga image and the ouput
+├── examples                # Contains a manga image and the ouput
 ├── config.py               # Contains training specs for models
 ├── data.py                 # Pytorch dataset class
-├── evaluation.py           # For model testing. Prints out some metrics
+├── evaluation.py           # For model testing.
 ├── train_base.py           # A train script for Unet34 model
 ├── train_ancillary.py      # A train script for ancillary model
-├── models.py               # Contains neural nets
+├── models.py              
 ├── utils.py                # Some helper functions
-├── report.pdf              # Article to get details about the project
+├── report.pdf              
 ├── requirement.txt
 ├── .gitignore
 └── README.md
@@ -36,8 +36,9 @@ It contains implementation of a of Unet + Resnet34 to perform this task. It also
 ---
 
 ## Dataset
-Thanks the Manga109 dataset providers, check it out here [Manga 109 website](http://www.manga109.org/en/).
-Thanks also to this annotated version for segmentation [zenodo](https://zenodo.org/record/4511796) for Manga109 datset from https://github.com/juvian. 
+Manga109 dataset  [Manga 109 website](http://www.manga109.org/en/).
+Annotated version for segmentation [zenodo](https://zenodo.org/record/4511796)
+https://github.com/juvian. 
 
 ## :wrench: How to run the code
 
